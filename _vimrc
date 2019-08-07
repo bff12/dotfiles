@@ -64,8 +64,9 @@ nnoremap <leader>b :buffers<cr>:b<space>
 "bind \b to show buffers 
 nnoremap <leader>n :NERDTree<ENTER> 
 "bind \n to show NERDTree 
-nnoremap <leader>db :bd<ENTER> 
-"bind \db to delete current buffer 
-nnoremap <leader>va ggVG 
+nnoremap <leader>va ^V% 
 "bind \va to select all 
+nnoremap <leader>mm ^V%   
+"bind \bb to select from first position to match
+
 
