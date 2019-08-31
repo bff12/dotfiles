@@ -1,4 +1,4 @@
-"Update by Breno<brenomoreff@gmail.com> 06.08.2019
+"Update by Breno<brenomoreff@gmail.com> 29.08.2019
 source $VIMRUNTIME/vimrc_example.vim
 
 set diffexpr=MyDiff()
@@ -70,4 +70,21 @@ nnoremap <leader>va ggVG
 "bind \va to select all 
 nnoremap mm ^V% 
 "bind mm to select from init of line to end match 
-
+let NERDTreeQuitOnOpen = 0 "dont close NERDTree when open new buffer
+let g:NERDTreeWinPos = "right" "set NERDTree to open in right
+nmap <leader>1 <Plug>BuffetSwitch(1)
+nmap <leader>2 <Plug>BuffetSwitch(2)
+nmap <leader>3 <Plug>BuffetSwitch(3)
+nmap <leader>4 <Plug>BuffetSwitch(4)
+nmap <leader>5 <Plug>BuffetSwitch(5)
+nmap <leader>6 <Plug>BuffetSwitch(6)
+nmap <leader>7 <Plug>BuffetSwitch(7)
+nmap <leader>8 <Plug>BuffetSwitch(8)
+nmap <leader>9 <Plug>BuffetSwitch(9)
+nmap <leader>0 <Plug>BuffetSwitch(10)
+"vim-buffed binds
+noremap <Tab> :bn<CR>
+noremap <S-Tab> :bp<CR>
+"navega entre buffers/tabs
+noremap <C-t> :tabnew split<CR>
+"cria tab para anotacoes? :)
