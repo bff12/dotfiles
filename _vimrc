@@ -1,4 +1,4 @@
-"Update by Breno<brenomoreff@gmail.com> 29.08.2019
+"Update by Breno<brenomoreff@gmail.com> 03.09.2019
 source $VIMRUNTIME/vimrc_example.vim
 
 set diffexpr=MyDiff()
@@ -88,3 +88,4 @@ noremap <S-Tab> :bp<CR>
 "navega entre buffers/tabs
 noremap <C-t> :tabnew split<CR>
 "cria tab para anotacoes? :)
+let g:buffet_show_index = 1 "show index of buffer
