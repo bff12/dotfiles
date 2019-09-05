@@ -1,4 +1,4 @@
-"Update by Breno<brenomoreff@gmail.com> 03.09.2019
+"Update by Breno<brenomoreff@gmail.com> 04.09.2019
 source $VIMRUNTIME/vimrc_example.vim
 
 set diffexpr=MyDiff()
@@ -42,7 +42,7 @@ syntax on
 filetype plugin indent on
 
 if has('gui_running')
- set guifont=IBM_Plex_Mono:h16
+ set guifont=IBM_Plex_Mono:h8
 endif
 
 colorscheme gruvbox
@@ -89,3 +89,5 @@ noremap <S-Tab> :bp<CR>
 noremap <C-t> :tabnew split<CR>
 "cria tab para anotacoes? :)
 let g:buffet_show_index = 1 "show index of buffer
+nnoremap \d :bp<cr>:bd #<cr> 
+"close buffer but not the window
