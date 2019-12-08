@@ -42,7 +42,7 @@ nnoremap <leader>n :NERDTree<ENTER>
 nnoremap <F12> :bd<ENTER> 
 "bind \va to select all 
 nnoremap <leader>va ggVG 
-"bind mm to select from init of line to end match 
+"bind mm to select to end match
 nnoremap mm $V% 
 "vim-buffet binds
 nmap <leader>1 <Plug>BuffetSwitch(1)
@@ -70,4 +70,4 @@ nnoremap \d :bp<cr>:bd #<cr>
 "autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode() "disable movements keys
 "autocmd BufEnter * colorscheme brenomore
 "set number "show line number
-"let g:NERDCustomDelimiters = { 'js': { 'left': '/***','right': '*********/' } } "custom comment
+"let g:NERDCustomDelimiters = { ''javascript': { 'left': '/***','right': '*********/' } } "custom comment
