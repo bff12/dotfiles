@@ -1,17 +1,23 @@
 {
-  "editor.fontFamily": "IBM Plex Mono Regular",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.wordWrap": "on",
+  "workbench.colorTheme": "Verdandi Alter Customized",
+  "editor.fontFamily": "CamingoCode",
   "editor.formatOnSave": true,
-  "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Gruvbox Dark Medium",
+  "workbench.editor.enablePreview": false,
   "workbench.sideBar.location": "right",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "workbench.editor.enablePreview": false,
-  "vim.enableNeovim": true,
-  "vim.neovimPath": "",
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": ["<leader>", "d"],
       "commands": [":wq"]
+    },
+    {
+      "before": ["c"],
+      "after": ["\"", "_", "c"]
     },
     {
       "before": ["<leader>", "1"],
@@ -63,5 +69,16 @@
       "before": ["<leader>", "v", "a"],
       "after": ["g", "g", "V", "G"]
     }
-  ]
+  ],
+  "explorer.compactFolders": false,
+  "timeline.excludeSources": [],
+  "workbench.editor.showTabs": false,
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "extensions.autoUpdate": false,
+  "update.enableWindowsBackgroundUpdates": false,
+  "update.mode": "none",
+  "editor.tokenColorCustomizations": {
+    "comments": "#e10310"
+  },
+  "emmet.includeLanguages": { "javascript": "html" }
 }
