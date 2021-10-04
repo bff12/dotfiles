@@ -1,14 +1,16 @@
 {
-  "[typescriptreact]": {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.wordWrap": "on",
-  "workbench.colorTheme": "Verdandi Alter Customized",
-  "editor.fontFamily": "CamingoCode",
+  "editor.fontFamily": "Camingocode",
   "editor.formatOnSave": true,
   "workbench.editor.enablePreview": false,
   "workbench.sideBar.location": "right",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "vim.normalModeKeyBindingsNonRecursive": [
     {
@@ -70,6 +72,7 @@
       "after": ["g", "g", "V", "G"]
     }
   ],
+  "vim.enableNeovim": true,
   "explorer.compactFolders": false,
   "timeline.excludeSources": [],
   "workbench.editor.showTabs": false,
@@ -77,8 +80,24 @@
   "extensions.autoUpdate": false,
   "update.enableWindowsBackgroundUpdates": false,
   "update.mode": "none",
-  "editor.tokenColorCustomizations": {
-    "comments": "#e10310"
+  "emmet.includeLanguages": {
+    "javascript": "html"
   },
-  "emmet.includeLanguages": { "javascript": "html" }
+  "editor.fontSize": 16,
+  "workbench.colorTheme": "Verdandi Alter Customized",
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "none",
+  "prettier.semi": false,
+  "space-before-function-paren": true,
+  "workbench.iconTheme": "chalice-icon-theme",
+  "CSSPercent.fixedDigits": 2,
+  "org.todoKeywords": [
+    "NEXT",
+    "TODO",
+    "WAITING",
+    "SOMEDAY",
+    "PROJ",
+    "DONE",
+    "CANCELLED"
+  ]
 }
