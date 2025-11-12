@@ -1,20 +1,75 @@
 (setq gc-cons-threshold 50000000)
 (setq large-file-warning-threshold 100000000)
-
+(setq debug-on-error t)
 (setq auto-save-default nil)
 (setq make-backup-files nil)
-
 (setq auth-sources '("~/.authinfo"))
-
-(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
-
+;; gpg it will ask you directly in the minibuffer at the bottom of your screen.
+(setq epa-pinentry-mode 'loopback)
+(setq org-startup-folded 'overview)
 (setq initial-major-mode 'org-mode)
-
 (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
-
-(setq pdf-view-continuous nil)
-
+(setq mac-right-command-modifier 'super)
+(setq mac-command-modifier 'super)
+(setq mac-option-modifier 'meta)
+(setq mac-right-option-modifier 'nil)
+;; (setq pdf-view-continuous nil)
+(setq ispell-dictionary "en")
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(setq org-html-inline-images t)
+(setq org-html-inline-image-rules
+      '(("file" . "\\.\\(png\\|jpg\\|jpeg\\|gif\\|svg\\)\\'")))
+(setq ispell-program-name "/opt/homebrew/bin/aspell")
 (setq ring-bell-function 'ignore)
+(setq org-clock-sound "~/Downloads/bell.wav")
+(setq inhibit-startup-screen t)
+(setq-default indent-tabs-mode nil)
+(setq tab-width 2)
+(setq use-package-always-ensure t)
+(set-face-attribute 'default nil :font "IBM Plex Mono" :height 150)
+(setq message-kill-buffer-on-exit t)
+(setq company-tooltip-align-annotations t)
+(setq frame-title-format
+      '((:eval (if (buffer-file-name)
+                   (abbreviate-file-name (buffer-file-name))
+                 "%b"))))
+(setq scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
+(setq pdf-view-use-scaling t
+      pdf-view-use-imagemagick nil)
+(setq org-hide-emphasis-markers t)
+(setq prettier-js-args '(
+                         "--single-quote" "true"
+                         "--arrow-parens" "avoid"
+                         ;; "--tab-width" "2"
+                         ))
+
+
+(winner-mode 1)
+
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+
+(fset 'yes-or-no-p '
+      y-or-n-p)
+
+(global-auto-revert-mode t)
+
+(delete-selection-mode 1)
+
+(flycheck-add-mode 'typescript-tslint 'web-mode)
+
+(set-face-foreground 'highlight nil)     ;;
+
+(put 'narrow-to-region 'disabled nil)
+
+'(forge-topic-list-limit '(60 . 60))
+
+'(org-agenda-files
+  '("/Users/brenofarias/Documents/agenda.org"))
+
+'(org-safe-remote-resources
+  '("\\`https://fniessen\\.github\\.io/org-html-themes/org/readtheorg\\.setup\\'"))
 
 (require 'package)
 (add-to-list 'package-archives
@@ -29,14 +84,11 @@
   (package-install 'use-package))
 (eval-when-compile
   (require 'use-package))
-(require 'bind-key)
-(setq use-package-always-ensure t)
 
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (blink-cursor-mode -1)
-
 (global-hl-line-mode 1)
 (global-visual-line-mode t)
 (line-number-mode +1)
@@ -44,112 +96,114 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-(setq inhibit-startup-screen t)
-
-(setq-default indent-tabs-mode nil)
-(setq tab-width 2)
-
 
 (global-set-key (kbd "s-k") 'previous-line)
 (global-set-key (kbd "s-j") 'next-line)
 (global-set-key (kbd "s-h") 'left-char)
 (global-set-key (kbd "s-l") 'right-char)
-
-(set-face-attribute 'default nil :font "CamingoCode-15")
-
-(winner-mode 1)
+(global-set-key (kbd "<backtab>") 'hs-toggle-hiding)
 (global-set-key (kbd "M-s-[") 'winner-undo)
 (global-set-key (kbd "M-s-]") 'winner-redo)
-
-(use-package diminish)
-
-(use-package mu4e
-  :load-path  "/usr/local/share/emacs/site-lisp/mu/mu4e/")
-
-(use-package smtpmail)
-
-;; we installed this with homebrew
-(setq mu4e-mu-binary (executable-find "mu"))
-
-;; this is the directory we created before:
-(setq mu4e-maildir "~/.maildir")
-
-;; this command is called to sync imap servers:
-(setq mu4e-get-mail-command (concat (executable-find "mbsync") " -a"))
-;; how often to call it in seconds:
-(setq mu4e-update-interval nil)
-
-;; save attachment to desktop by default
-;; or another choice of yours:
-(setq mu4e-attachment-dir "~/Desktop")
-
-;; rename files when moving - needed for mbsync:
-(setq mu4e-change-filenames-when-moving t)
-
-;; list of your email adresses:
-(setq mu4e-user-mail-address-list '("brenofarias87@yahoo.com.br"))
-
-(setq mu4e-contexts
-      `(,(make-mu4e-context
-          :name "yahoo"
-          :enter-func
-          (lambda () (mu4e-message "Enter brenofarias87@yahoo.com.br context"))
-          :leave-func
-          (lambda () (mu4e-message "Leave brenofarias87@yahoo.com.br context"))
-          :match-func
-          (lambda (msg)
-            (when msg
-              (mu4e-message-contact-field-matches msg
-                                                  :to "brenofarias87@yahoo.com.br")))
-          :vars '((user-mail-address . "brenofarias87@yahoo.com.br" )
-                  (user-full-name . "Breno Farias")
-                  (mu4e-drafts-folder . "/yahoo/Drafts")
-                  (mu4e-refile-folder . "/yahoo/Archive")
-                  (mu4e-sent-folder . "/yahoo/Sent Messages")
-                  (mu4e-trash-folder . "/yahoo/Deleted Messages")))))
-
-(setq message-kill-buffer-on-exit t)
-
-(setq send-mail-function 'sendmail-send-it
-      message-send-mail-function 'sendmail-send-it)
-
-(setq sendmail-program (executable-find "msmtp"))
-
-(setq message-sendmail-envelope-from 'header)
-
-
-(use-package undo-tree
-  :diminish
-  :config
-  (global-undo-tree-mode 1))
-
-
-(global-set-key (kbd "s-<backspace>") 'kill-whole-line)
-(global-set-key (kbd "M-S-<backspace>") 'kill-word)
-
+(global-set-key (kbd "M-m") 'toggle-frame-maximized)
 (global-set-key (kbd "s-a") 'mark-whole-buffer)
+(global-set-key (kbd "s-<return>") 'smart-open-line)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key (kbd "s-[") 'sp-unwrap-sexp)
+(global-set-key (kbd "s-]") 'sp-rewrap-sexp)
+(global-set-key (kbd "s-n") 'my-scratch-buffer)
+(global-set-key (kbd "s-t") 'my-vterm-custom-buffer-name)
 
-(setq frame-title-format
-      '((:eval (if (buffer-file-name)
-                   (abbreviate-file-name (buffer-file-name))
-                 "%b"))))
 
-(setq scroll-margin 0
-      scroll-conservatively 100000
-      scroll-preserve-screen-position 1)
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
 
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
-(fset 'yes-or-no-p '
-      y-or-n-p)
+(defun smart-open-line ()
+  (interactive)
+  (move-end-of-line nil)
+  (newline-and-indent))
 
-(global-auto-revert-mode t)
+(defun smart-open-line-above ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (newline-and-indent)
+  (forward-line -1)
+  (indent-according-to-mode))
 
-(global-set-key (kbd "C-x k") 'kill-this-buffer)
+
+(defun my-web-mode-hook ()
+  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
+
+
+(defun scroll-pdf ()
+  "Auto Scroll PDF."
+  (interactive)
+  (run-with-timer 0 (* 0.8) 'pdf-view-next-line-or-next-page 1))
+
+(defun my-vterm-custom-buffer-name (name)
+  "Open a new vterm buffer with a specified NAME."
+  (interactive "sEnter buffer name: ")
+  (let ((buffer (get-buffer-create (concat "*VTERM-" name "*"))))
+    (with-current-buffer buffer
+      (unless (derived-mode-p 'vterm-mode)
+        (vterm-mode)))
+    (switch-to-buffer buffer)))
+
+(defun my-scratch-buffer ()
+  (interactive)
+  (let ((n 0)
+        bufname buffer)
+    (catch 'done
+      (while t
+        (setq bufname (concat "*hello-world"
+                              (if (= n 0) "" (int-to-string n))
+                              "*"))
+        (setq n (1+ n))
+        (when (not (get-buffer bufname))
+          (setq buffer (get-buffer-create bufname))
+          (with-current-buffer buffer
+            (org-mode))
+          (throw 'done (display-buffer buffer t))) ))))
+
+
+(defun my/set-local-eslint ()
+  (setq-local flycheck-javascript-eslint-executable (executable-find "eslint")))
+
+
+(defun my-counsel-rg-ignore-extensions ()
+  "Run `counsel-rg` ignoring certain file extensions."
+  (interactive)
+  (let ((counsel-rg-base-command
+         "rg -S -w -M 200 --no-heading --line-number --color never --glob '!*.json' --glob '!*.md' --glob '!*.snap' --glob '!*.svg' %s"))
+    (counsel-projectile-rg)))
+
+
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
-
 (add-hook 'pdf-view-mode-hook (lambda() (linum-mode -1)))
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "ts" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
+
+(use-package tide :ensure t)
+
+(use-package diminish)
 
 (use-package smartparens
   :ensure t
@@ -201,46 +255,11 @@
 (use-package hide-mode-line
   :ensure t)
 
-(defun my/org-tree-slide-setup ()
-  (org-display-inline-images)
-  (hide-mode-line-mode 1))
-
-(defun my/org-tree-slide-end ()
-  (org-display-inline-images)
-  (hide-mode-line-mode 0))
-
-(use-package org-tree-slide
-  :ensure t
-  :defer t
-  :custom
-  (org-image-actual-width nil)
-  (org-tree-slide-activate-message "Presentation started!")
-  (org-tree-slide-deactivate-message "Presentation finished!")
-  :hook ((org-tree-slide-play . my/org-tree-slide-setup)
-         (org-tree-slide-stop . my/org-tree-slide-end)))
-
-
-(with-eval-after-load "org-tree-slide"
-  (define-key org-tree-slide-mode-map (kbd "<f9>") 'org-tree-slide-move-previous-tree)
-  (define-key org-tree-slide-mode-map (kbd "<f10>") 'org-tree-slide-move-next-tree)
-  )
 
 (use-package swiper
   :config
-  (global-set-key "\C-s" 'swiper)
   (global-set-key (kbd "s-f") 'swiper))
 
-(delete-selection-mode 1)
-
-(global-set-key (kbd "s-<right>") (kbd "C-e"))
-(global-set-key (kbd "S-s-<right>") (kbd "C-S-e"))
-(global-set-key (kbd "s-<left>") (kbd "M-m"))
-(global-set-key (kbd "S-s-<left>") (kbd "M-S-m"))
-
-(global-set-key (kbd "s-s") 'save-buffer)
-(global-set-key (kbd "s-S") 'write-file)
-(global-set-key (kbd "s-<up>") 'beginning-of-buffer)
-(global-set-key (kbd "s-<down>") 'end-of-buffer)
 
 (use-package which-key
   :ensure t
@@ -270,14 +289,6 @@
   (setq company-minimum-prefix-length 1)
   (add-hook 'after-init-hook 'global-company-mode))
 
-(defun my-web-mode-hook ()
-  (set (make-local-variable 'company-backends) '(company-css company-web-html company-yasnippet company-files)))
-
-
-(defun scroll-pdf ()
-  "Auto Scroll PDF."
-  (interactive)
-  (run-with-timer 0 (* 0.8) 'pdf-view-next-line-or-next-page 1))
 
 (use-package yaml-mode)
 (use-package haml-mode)
@@ -286,6 +297,8 @@
 (use-package web-mode
   :config
   (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
   (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -294,9 +307,11 @@
   (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.ts?\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.css?\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\jsx\\'" . web-mode))
   (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode)))
 
 
@@ -313,27 +328,10 @@
   :config
   (move-text-default-bindings))
 
-(defun smart-open-line ()
-  (interactive)
-  (move-end-of-line nil)
-  (newline-and-indent))
-
-(defun smart-open-line-above ()
-  (interactive)
-  (move-beginning-of-line nil)
-  (newline-and-indent)
-  (forward-line -1)
-  (indent-according-to-mode))
-
-(global-set-key (kbd "s-<return>") 'smart-open-line)
-
 
 (use-package org-pdftools
   :hook (org-mode . org-pdftools-setup-link))
 (pdf-tools-install)
-
-(setq pdf-view-use-scaling t
-      pdf-view-use-imagemagick nil)
 
 (use-package org-superstar
   :after org
@@ -342,30 +340,16 @@
   (setq org-superstar-special-todo-items t))
 
 
-(setq org-hide-emphasis-markers t)
-
 (use-package prettier-js
   :init
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode))
 
 
-;; (setq prettier-js-args '(
-;;                          "--arrow-parens" "avoid"
-;;                          ))
-
-(setq org-emphasis-alist
-      '(("*" (bold :slant italic :weight black :foreground "#000000" :background "#FCFF03" ))
-        ("/" (italic :foreground "#F3CA40" ))
-        ("_" (:underline t  ))
-        ("=" (:foreground "#E74C3C"))
-        ("~" (:foreground "#53df83" ))
-        ("+" (:strike-through nil :foreground "#FFC300" ))))
-
 (use-package org-roam
   :ensure t
   :custom
-  (org-roam-directory (file-truename "~/BreNotes"))
+  (org-roam-directory (file-truename "~/Documents/BreNotes"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
@@ -374,23 +358,9 @@
          ;; Dailies
          ("C-c n j" . org-roam-dailies-capture-today))
   :config
-  ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
-  ;; If using org-roam-protocol
   (require 'org-roam-protocol))
-
-(global-set-key "\C-ca" 'org-agenda)
-
-(global-set-key (kbd "s-[") 'sp-unwrap-sexp)
-(global-set-key (kbd "s-]") 'sp-rewrap-sexp)
-
-(defun eshell-new()
-  "Open a new instance of eshell."
-  (interactive)
-  (vterm 'N))
-
-(global-set-key (kbd "s-t") 'eshell-new)
 
 (use-package visual-regexp
   :config
@@ -400,38 +370,13 @@
 (use-package counsel-projectile
   :config
   (counsel-projectile-mode 1)
-  (global-set-key (kbd "s-F") 'counsel-projectile-rg) )
+  (global-set-key (kbd "s-F") 'my-counsel-rg-ignore-extensions))
 
 (use-package shell-pop
   :config
   (custom-set-variables
    '(shell-pop-shell-type (quote ("ansi-term" "*ansi-term*" (lambda nil (ansi-term shell-pop-term-shell)))))
    '(shell-pop-universal-key "s-=")))
-
-(use-package elfeed
-  :ensure t
-  :commands (elfeed))
-
-(use-package elfeed-protocol
-  :ensure t
-  :demand t
-  :after elfeed
-  :config
-  (elfeed-protocol-enable))
-
-(use-package password-store
-  :ensure t
-  :demand t
-  :after elfeed-protocol)
-
-(global-set-key (kbd "C-x w") 'elfeed)
-
-(setq elfeed-feeds
-      '("https://cprss.s3.amazonaws.com/javascriptweekly.com.xml"
-        "https://css-tricks.com/feed/"
-        ;; "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
-        "https://www.smashingmagazine.com/feed"
-        ))
 
 (use-package visual-regexp
   :config
@@ -440,13 +385,15 @@
 
 (global-auto-revert-mode t)
 
-;; Magit
 (use-package magit
   :config
   (global-set-key (kbd "s-g") 'magit-status))
 
 (use-package forge
-  :after magit)
+  :after magit
+  :config
+  (add-to-list 'forge-alist '("xxx.xx.com" "github.xxx.com/api/v3"
+                              "github.xxx.com" forge-github-repository)))
 
 (use-package git-gutter
   :diminish
@@ -464,57 +411,8 @@
   (setq org-startup-with-inline-images t)
   (with-eval-after-load "org"
     (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
-  (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t))))
-
-(defun my-scratch-buffer ()
-  (interactive)
-  (let ((n 0)
-        bufname buffer)
-    (catch 'done
-      (while t
-        (setq bufname (concat "*hello-world"
-                              (if (= n 0) "" (int-to-string n))
-                              "*"))
-        (setq n (1+ n))
-        (when (not (get-buffer bufname))
-          (setq buffer (get-buffer-create bufname))
-          (with-current-buffer buffer
-            (org-mode))
-          (throw 'done (display-buffer buffer t))) ))))
-
-(global-set-key (kbd "s-n") 'my-scratch-buffer)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (unless (and (fboundp 'play-sound-internal)                  ;;
-;;              (subrp (symbol-function 'play-sound-internal))) ;;
-;;   (require 'play-sound))                                     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (set-face-background 'hl-line "#3e4446") ;;
-(set-face-foreground 'highlight nil)     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (savehist-mode)
-;; (setq-default line-spacing 2)
-
-;; (setq org-clock-sound t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (add-hook                                                           ;; ;;;   ;;
-;;  'after-init-hook                                                   ;; ;; ;; ;;
-;;  (lambda ()                                                         ;; ;; ;; ;;
-;;    (let ((private-file (concat user-emacs-directory "private.el"))) ;; ;; ;; ;;
-;;      (when (file-exists-p private-file)                             ;; ;; ;; ;;
-;;        (load-file private-file)))))                                 ;; ;; ;; ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(use-package modus-vivendi-theme
-  :ensure t
-  :config
-  (load-theme 'modus-vivendi t))
-
-;; (set-face-attribute 'highlight nil :background "#3e4446" :foreground 'unspecified)
+  (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)
+                                                           (js . t))))
 
 ( use-package evil
   :init
@@ -556,6 +454,10 @@
 
 (evil-commentary-mode)
 
+(use-package leuven-theme
+  :config
+  (load-theme 'leuven t))
+
 (use-package add-node-modules-path)
 
 (eval-after-load 'web-mode
@@ -564,9 +466,6 @@
      (add-hook 'web-mode-hook #'prettier-js-mode)))
 
 
-(defun my/set-local-eslint ()
-  (setq-local flycheck-javascript-eslint-executable (executable-find "eslint")))
-;;
 (use-package flycheck
   :ensure t
   :hook (web-mode . my/set-local-eslint)
@@ -574,25 +473,19 @@
   (global-flycheck-mode 1))
 (flycheck-add-mode 'javascript-eslint 'web-mode)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("b167a732d4023f0c040e1ad4a7ebe13db9c9851f2ee211f0f89c1ff5120d03bd" "adab4bfb5305761964dbaab07061360e2c68d2e5af91592d0c0e936d5f70c652" "ec5e80e491d3f500217fc9d28171600d1927692a607d0cd6cacb91318e0f0fe3" "1782fc4921306f3e5de5462c505938aeeb7a0105c235c3c524cef5fe74ffa6b2" "40a6f4318895475665d999566f360f0c237c2fc5b0b99dbd7e5af9ceceb993ea" "c44032eaa7edf8c0178985817d7b2bc13378171454acd56ab75eed6e32c2cf1c" "f1ddbd51e9848e7f6036a6e7c40ff09f3421bde03c4793753ca1bc9e0110a52d" "9c030815497cff41dbdb0cb4d3ae08268d99ac2926cd69999249181d9c1b3109" "275a6269ddd403be6bae290a5b5f9bd5d4d8321d76f5aa5931178617f1223a65" "f790a0f52ca8e939b5108cbae2580ca3431b1697ae321dc827bb029937410841" "a81d814e9021cd20ae59346bd49c2d74ce1a3ef967e56fada5aeace01d4a7854" default))
- '(forge-topic-list-limit '(60 . 60))
- '(org-agenda-files '("~/Documents/agenda.org"))
- '(package-selected-packages
-   '(diminish org-tree-slide evil-commentary vterm plantuml-mode forge modus-vivendi-theme org-roam yaml-mode which-key web-mode visual-regexp vi-tilde-fringe use-package undo-fu smex smartparens smart-mode-line-powerline-theme simpleclip shell-pop prettier-js powerthesaurus org-superstar org-pdftools neotree multiple-cursors move-text markdown-mode magit ivy-rich haml-mode git-gutter flyspell-correct-popup flx expand-region exec-path-from-shell emmet-mode define-word counsel-projectile company avy all-the-icons))
- '(shell-pop-shell-type
-   '("ansi-term" "*ansi-term*"
-     (lambda nil
-       (ansi-term shell-pop-term-shell))))
- '(shell-pop-universal-key "s-="))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(use-package restclient)
+
+(use-package ob-restclient)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((restclient . t)))
+
+(use-package yasnippet
+  :ensure t
+  :hook ((text-mode
+          prog-mode
+          conf-mode
+          snippet-mode) . yas-minor-mode-on)
+  :init
+  (setq yas-snippet-dir "~/.emacs.d/snippets"))
