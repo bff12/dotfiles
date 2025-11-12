@@ -57,8 +57,6 @@
 
 (delete-selection-mode 1)
 
-(flycheck-add-mode 'typescript-tslint 'web-mode)
-
 (set-face-foreground 'highlight nil)     ;;
 
 (put 'narrow-to-region 'disabled nil)
@@ -465,13 +463,14 @@
      (add-hook 'web-mode-hook #'add-node-modules-path)
      (add-hook 'web-mode-hook #'prettier-js-mode)))
 
-
 (use-package flycheck
   :ensure t
   :hook (web-mode . my/set-local-eslint)
   :init
-  (global-flycheck-mode 1))
-(flycheck-add-mode 'javascript-eslint 'web-mode)
+  (global-flycheck-mode 1)
+  :config
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (flycheck-add-mode 'typescript-tslint 'web-mode))
 
 (use-package restclient)
 
